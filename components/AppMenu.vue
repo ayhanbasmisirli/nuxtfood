@@ -12,6 +12,9 @@
         </nuxt-link>
       </li>
     </ul>
+    <div class="smallnum">
+      {{ cartTotalItems }}
+    </div>
     <nuxt-link to="/cart">
       Cart
     </nuxt-link>
@@ -20,10 +23,17 @@
 
 <script>
 import AppLogo from '@/components/AppLogo.vue'
+import { mapGetters } from 'vuex'
 
 export default {
+
   components: {
     AppLogo
+  },
+  computed: {
+    ...mapGetters([
+      'cartTotalItems'
+    ])
   }
 
 }

@@ -16,7 +16,7 @@
           <tr v-for="item in cart" :key="item.id">
             <td>
               {{ item.item }}
-              <span v-if="item.options">- {{ item.options }}</span>
+              <span v-if="item.options">- (options){{ item.options }}</span>
             </td>
             <td>
               <span v-for="addon in item.addOns" :key="addon" class="comma">{{ addon }}</span>
@@ -27,7 +27,7 @@
           <tr>
             <td colspan="3" />
             <td class="total">
-              Total:
+              Total: ${{ totalPriceGetter.toFixed(2) }}
             </td>
           </tr>
         </tbody>
@@ -37,13 +37,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   computed: {
     ...mapState([
       'cart'
+    ]),
+    ...mapGetters([
+      'totalPriceGetter'
     ])
+
   }
 }
 </script>
