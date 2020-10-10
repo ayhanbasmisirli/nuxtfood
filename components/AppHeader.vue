@@ -1,11 +1,8 @@
 <template>
   <section class="masthead" role="img" aria-label="Image Description">
     <h1>
-      Nuxt Food App
+      Nuxt Food
     </h1>
-    <button>
-      See restaurants
-    </button>
   </section>
 </template>
 
@@ -17,11 +14,11 @@ export default {
 
 <style lang='scss' scoped>
 .masthead {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: column;
-//   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 padding: 40px;
   width: 100%;
   height: 80vh; /* if you don't want it to take up the full screen, reduce this number */
