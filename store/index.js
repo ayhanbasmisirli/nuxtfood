@@ -1,5 +1,8 @@
+import { v4 as uuidv4 } from 'uuid'
+
 export const state = () => ({
-  fooddata: []
+  fooddata: [],
+  cart: []
 })
 
 // export const getters = {
@@ -11,6 +14,10 @@ export const state = () => ({
 export const mutations = {
   updateFoodData: (state, payload) => {
     state.fooddata = payload
+  },
+  addToCart: (state, formOutput) => {
+    formOutput.id = uuidv4()
+    state.cart.push(formOutput)
   }
 }
 
