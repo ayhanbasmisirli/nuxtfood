@@ -1,5 +1,5 @@
 # nuxtfoodapp
-
+## https://foodnuxt.netlify.app/
 ## Build Setup
 
 ```bash
@@ -17,4 +17,4 @@ $ yarn start
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
