@@ -19,7 +19,13 @@
           <h3>Options</h3>
         </legend>
         <div v-for="option in currentItem.options" :key="option">
-          <input :id="option" v-model="itemOptions" type="radio" name="option" :value="option">
+          <input
+            :id="option"
+            v-model="$v.itemOptions.$model"
+            type="radio"
+            name="option"
+            :value="option"
+          >
           <label :for="option">{{ option }}</label>
         </div>
       </fieldset>
@@ -29,7 +35,13 @@
           <h3>Add Ons</h3>
         </legend>
         <div v-for="addon in currentItem.addOns" :key="addon">
-          <input :id="addon" v-model="itemAddons" type="checkbox" name="addon" :value="addon">
+          <input
+            :id="addon"
+            v-model="$v.itemAddons.$model"
+            type="checkbox"
+            name="addon"
+            :value="addon"
+          >
           <label :for="addon">{{ addon }}</label>
         </div>
       </fieldset>
@@ -40,6 +52,11 @@
         <nuxt-link to="/restaurants">
           restaurants
         </nuxt-link>
+      </app-toast>
+
+      <app-toast v-if="errors">
+        Please select options and
+        <br>addons before continuing
       </app-toast>
     </section>
 
@@ -53,7 +70,7 @@
 <script>
 import { mapState } from 'vuex'
 import AppToast from '@/components/AppToast.vue'
-
+import { required } from 'vuelidate/lib/validators'
 export default {
   components: {
     AppToast
@@ -65,7 +82,16 @@ export default {
       itemOptions: '',
       itemAddons: [],
       itemSizeAndCost: [],
-      cartSubmitted: false
+      cartSubmitted: false,
+      errors: false
+    }
+  },
+  validations: {
+    itemOptions: {
+      required
+    },
+    itemAddons: {
+      required
     }
   },
   computed: {
@@ -73,7 +99,6 @@ export default {
     currentItem () {
       // more efficient than forEach because we can break
       let result
-
       for (let i = 0; i < this.fooddata.length; i++) {
         for (let j = 0; j < this.fooddata[i].menu.length; j++) {
           if (this.fooddata[i].menu[j].id === this.id) {
@@ -82,7 +107,6 @@ export default {
           }
         }
       }
-
       return result
     },
     combinedPrice () {
@@ -99,9 +123,17 @@ export default {
         addOns: this.itemAddons,
         combinedPrice: this.combinedPrice
       }
-
-      this.cartSubmitted = true
-      this.$store.commit('addToCart', formOutput)
+      let addOnError = this.$v.itemAddons.$invalid
+      let optionError = this.currentItem.options
+        ? this.$v.itemOptions.$invalid
+        : false
+      if (addOnError || optionError) {
+        this.errors = true
+      } else {
+        this.errors = false
+        this.cartSubmitted = true
+        this.$store.commit('addToCart', formOutput)
+      }
     }
   }
 }
@@ -118,7 +150,6 @@ export default {
   grid-row-gap: 60px;
   line-height: 2;
 }
-
 .image {
   grid-area: 1 / 1 / 2 / 2;
   background-size: cover;
