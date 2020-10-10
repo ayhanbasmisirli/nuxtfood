@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ currentItem }}
     <main class="container">
       <section
         class="image"
