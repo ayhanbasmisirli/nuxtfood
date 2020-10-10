@@ -1,8 +1,8 @@
 <template>
   <main class="cart container">
     <h2>Your Cart</h2>
-
-    <section>
+    <AppEmptyCart />
+    <section v-if="cart.length">
       <table>
         <thead>
           <tr>
@@ -38,8 +38,12 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import AppEmptyCart from '@/components/AppEmptyCart.vue'
 
 export default {
+  components: {
+    AppEmptyCart
+  },
   computed: {
     ...mapState([
       'cart'
